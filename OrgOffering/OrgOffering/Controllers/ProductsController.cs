@@ -40,6 +40,7 @@ namespace OrgOffering.Controllers
         // GET: Products/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
+
             if (id == null || _context.Products == null)
             {
                 return NotFound();
@@ -71,11 +72,21 @@ namespace OrgOffering.Controllers
             if (ModelState.IsValid)
             {
                 product.ProductId = Guid.NewGuid();
+                _productRepository.Add(product);
+                
+                return RedirectToAction(nameof(Index));
+            }
+            return View(product);
+
+            /*
+            if (ModelState.IsValid)
+            {
+                product.ProductId = Guid.NewGuid();
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(product); */
         }
 
         // GET: Products/Edit/5
